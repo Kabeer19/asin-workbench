@@ -10,6 +10,7 @@ import streamlit as st
 
 from engine import (ROOT, INPUTS, CALCULATIONS, Settings, InputError, calculate,
                     read_table, csv_bytes, excel_bytes, compare_prices, load_rules)
+from single_checker import render_single_checker
 
 st.set_page_config(page_title='ASIN Workbench', page_icon='📦', layout='wide')
 st.markdown('''<style>
@@ -66,9 +67,13 @@ with st.sidebar:
 settings = Settings(fx, logistics, fba_adj, fbm_adj, amazon_adj)
 st.markdown('<div class="eyebrow">RESEARCH TO REVIEW</div>', unsafe_allow_html=True)
 st.title('Find your next ASIN.')
-st.markdown('<div class="intro">Upload your research list and four reports. Refresh prices, calculate costs, and review your Australia selling opportunities in one place.</div>', unsafe_allow_html=True)
+st.markdown('<div class="intro">Review a research list with your reports, or check one ASIN manually. Refresh prices, calculate costs, and review your Australia selling opportunities in one place.</div>', unsafe_allow_html=True)
 
-uploads_tab, template_tab, rules_tab = st.tabs(['Workspace', 'Download template', 'Calculation rules'])
+uploads_tab, single_tab, template_tab, rules_tab = st.tabs(['Workspace', 'Single ASIN checker', 'Download template', 'Calculation rules'])
+
+# Render this independent workflow before the bulk uploader's early stop.
+with single_tab:
+    render_single_checker(settings, referral, duty)
 
 with template_tab:
     st.subheader('Start with three fields')

@@ -12,9 +12,19 @@ Streamlit application for evaluating US-sourced products for sale on Amazon Aust
 6. In Advanced settings choose Python 3.12, the tested Python version. No secrets are needed.
 7. Deploy and wait for the application page to load. Keep access private for personal/business use unless you choose to share it.
 
-The required files are `app.py`, `engine.py`, `requirements.txt`, `.streamlit/config.toml`, plus `referral_fees.json`, `duty_rates.json`, and `research_template.xlsx`. `test_engine.py` is included for verification.
+The required files are `app.py`, `engine.py`, `single_checker.py`, `requirements.txt`, `.streamlit/config.toml`, plus `referral_fees.json`, `duty_rates.json`, and `research_template.xlsx`. The test files are included for verification.
 
 ## Use the app
+
+### Single ASIN checker (no uploads)
+
+Open **Single ASIN checker** and enter ASIN, category, sub-category/Product type, US Buy Box price (USD), AU Buy Box price (AUD), AU fulfilment type, package weight in grams, FBA fee and closing fee. Enter fee zero explicitly when appropriate; a blank fee is unavailable. Sales rank and brand are optional. Sales rank, if supplied, uses the leftmost comma-separated value.
+
+Click **Calculate profitability** for applied selling price, total cost, P&L per unit, profit margin, ROI and a cost breakdown. The saved category referral and sub-category duty rules are used. Margin is profit divided by applied selling price; ROI is profit divided by total cost. These are estimates under the existing workbook rules and the values you enter, with no Amazon API lookup.
+
+Changing sidebar settings recalculates the last submitted single-ASIN inputs. After editing the form, submit it again. Download the result as Excel or CSV. Missing/invalid required inputs show errors and hide the previous result. This mode works without uploading any bulk reports.
+
+### Bulk workspace
 
 Download the research template and fill only ASIN, Sub-category, Category. Upload that research list plus the US prices, AU prices, AU fee report, and package weight/sales-rank report. The original working workbook is supported; only MATCH ASIN (DEMAND & PRIORITY) is read.
 
@@ -32,7 +42,7 @@ The referral rules were extracted from your supplied workbook, with a stated ref
 
 ```sh
 python -m pip install -r requirements.txt
-python -m unittest -v test_engine
+python -m unittest -v test_engine test_single_ui
 python -m streamlit run app.py
 ```
 

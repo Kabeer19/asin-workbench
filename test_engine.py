@@ -4,7 +4,8 @@ import unittest
 import pandas as pd
 import openpyxl
 from engine import (calculate, Settings, referral_fee, load_rules, excel_bytes,
-                    normalize_research, compare_prices, read_table, InputError, csv_bytes)
+                    normalize_research, compare_prices, read_table, InputError, csv_bytes,
+                    calculate_single)
 
 
 def fixture():
@@ -25,6 +26,56 @@ def fixture():
 
 
 class EngineTests(unittest.TestCase):
+    def single(self, **changes):
+        values = dict(asin_value='B000000001', category='Kitchen', subcategory='FOOD_SLICER',
+                      us_price=20, au_price=66, fulfilment='Amazon', package_weight_g=750,
+                      fba_fee=8.88, closing_fee=0)
+        values.update(changes)
+        return calculate_single(**values)
+
+    def test_manual_single_matches_bulk_engine_and_optional_rank(self):
+        single = self.single().iloc[0]
+        bulk = calculate(*fixture()).iloc[0]
+        for field in ['OUR APPLIED SELLING PRICE IN AUD', 'TOTAL COST', 'REFERRAL FEE AUD',
+                      'Duties Charges', 'P & L (AUD)']:
+            self.assertAlmostEqual(single[field], bulk[field])
+        self.assertEqual(single.Status, 'Ready')
+        self.assertTrue(pd.isna(single['SELLING RANK']))
+        self.assertAlmostEqual(single['Profit margin %'], single['P & L (AUD)']/65*100)
+        self.assertAlmostEqual(single['ROI % (on total cost)'], single['P & L (AUD)']/single['TOTAL COST']*100)
+
+    def test_manual_single_missing_fees_do_not_default_to_zero(self):
+        r = self.single(fba_fee=None, closing_fee=None).iloc[0]
+        self.assertEqual(r.Status, 'Error')
+        self.assertTrue(pd.isna(r['P & L (AUD)']))
+        self.assertTrue(pd.isna(r['Profit margin %']))
+        self.assertEqual(self.single(fba_fee=0, closing_fee=0).iloc[0].Status, 'Ready')
+
+    def test_manual_single_all_methods_and_validation(self):
+        for method, adjustment in [('Amazon', -1), ('FBA', -1), ('FBM', 3)]:
+            r = self.single(fulfilment=method, sales_rank='5588, 55').iloc[0]
+            self.assertEqual(r['Fulfilment Method'], method)
+            self.assertEqual(r['Fulfilment Adjustment'], adjustment)
+            self.assertEqual(r['SELLING RANK'], 5588)
+            if method != 'Amazon':
+                self.assertEqual(r['Sold by'], '')
+        self.assertEqual(self.single(asin_value='invalid').iloc[0].Status, 'Error')
+        self.assertEqual(self.single(sales_rank='invalid').iloc[0].Status, 'Error')
+        self.assertEqual(self.single(au_price=.5).iloc[0].Status, 'Error')
+        self.assertEqual(self.single(package_weight_g=0).iloc[0].Status, 'Error')
+        with self.assertRaises(InputError):
+            self.single(fulfilment=None)
+
+    def test_manual_single_recalculates_settings_and_exports(self):
+        before = self.single().iloc[0]
+        after = self.single(settings=Settings(usd_to_aud=1.6)).iloc[0]
+        self.assertNotEqual(before['P & L (AUD)'], after['P & L (AUD)'])
+        r = self.single(asin_value=' b000000001 ')
+        self.assertEqual(r.iloc[0].ASIN, 'B000000001')
+        exported = read_table(excel_bytes(r), 'single.xlsx')
+        self.assertEqual(exported.iloc[0].ASIN, 'B000000001')
+        self.assertTrue(pd.isna(r.iloc[0]['SELLING RANK']))
+
     def test_all_methods_and_full_calculation(self):
         result=calculate(*fixture())
         self.assertEqual(result.Status.tolist(),['Ready']*3)

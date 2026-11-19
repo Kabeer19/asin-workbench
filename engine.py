@@ -127,7 +127,7 @@ def load_rules():
     return referral, duty
 
 
-def calculate(research, us, au, fees, details, settings=Settings(), rules=None):
+def calculate(research, us, au, fees, details, settings=Settings(), rules=None, *, require_sales_rank=True):
     for value in (settings.usd_to_aud, settings.logistics_aud_per_kg):
         if not math.isfinite(value) or value <= 0:
             raise InputError('Exchange rate and logistics rate must be positive finite numbers.')
@@ -172,7 +172,9 @@ def calculate(research, us, au, fees, details, settings=Settings(), rules=None):
         rank = math.nan
         if d:
             first = str(d.get('Sales Rank', '')).split(',')[0].strip()
-            if first.isdigit() and int(first) > 0:
+            if not first and not require_sales_rank:
+                notes.append('Sales rank not supplied')
+            elif first.isdigit() and int(first) > 0:
                 rank = int(first)
             else:
                 errors.append('Sales rank: first value must be a positive integer')
@@ -234,6 +236,38 @@ def calculate(research, us, au, fees, details, settings=Settings(), rules=None):
         record.update(Status='Error' if errors else 'Ready', Errors='; '.join(errors), Notes='; '.join(notes))
         result.append(record)
     return pd.DataFrame(result, columns=COLUMNS)
+
+
+def calculate_single(*, asin_value, category, subcategory, us_price, au_price,
+                     fulfilment, package_weight_g, fba_fee, closing_fee,
+                     sales_rank='', brand='', settings=Settings(), rules=None):
+    """Evaluate manual inputs through the same engine as uploaded reports."""
+    methods = {'amazon': 'Amazon', 'fba': 'FBA', 'fbm': 'FBM'}
+    method = methods.get(key(fulfilment))
+    if method is None:
+        raise InputError('Choose Amazon, FBA or FBM fulfilment.')
+    a = asin(asin_value)
+    if not a:
+        raise InputError('Enter an ASIN.')
+    research = pd.DataFrame([{'ASIN': a, 'Sub-category': subcategory or '', 'Category': category or ''}])
+    us = pd.DataFrame([{'asin': a, 'BuyBoxPrices': us_price, 'country': 'US', 'currency_code': 'USD'}])
+    # This internal marker encodes the manually selected third-party method;
+    # it is removed from the result so it never appears as a real seller ID.
+    au = pd.DataFrame([{'asin': a, 'BuyBoxPrices': au_price, 'country': 'AU', 'currency_code': 'AUD',
+                        'seller_id': 'ANEGB3WVEVKZB' if method == 'Amazon' else 'manual-entry',
+                        'fulfilled_by_amazon': method != 'FBM', 'buybox_winner': True}])
+    fees = pd.DataFrame([{'asin': a, 'FBAfees': fba_fee, 'VariableClosingFee': closing_fee,
+                          'currency': 'AUD', 'marketplace': 'AUS'}])
+    details = pd.DataFrame([{'ASIN': a, 'Package Weight (g)': package_weight_g,
+                             'Sales Rank': '' if sales_rank is None else str(sales_rank).strip(),
+                             'Brand': brand or ''}])
+    result = calculate(research, us, au, fees, details, settings, rules, require_sales_rank=False)
+    result['Sold by'] = 'ANEGB3WVEVKZB' if method == 'Amazon' else ''
+    result['Notes'] = result['Notes'].map(lambda n: 'Manual entry; no live Amazon lookup' + ('; ' + n if n else ''))
+    valid = result['Status'].eq('Ready')
+    result['Profit margin %'] = (result['P & L (AUD)'] / result['OUR APPLIED SELLING PRICE IN AUD'] * 100).where(valid)
+    result['ROI % (on total cost)'] = (result['P & L (AUD)'] / result['TOTAL COST'] * 100).where(valid)
+    return result
 
 
 def safe_text(value):
