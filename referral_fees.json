@@ -1,0 +1,496 @@
+{
+  "source_file": "Amazon_Australia_Referral_Fees_Updated.xlsx",
+  "source_url_from_workbook": "https://sell.amazon.com.au/pricing",
+  "source_checked_date_from_workbook": "2026-08-13",
+  "verification": "Extracted from supplied workbook; not independently verified against current Amazon website.",
+  "category_key_normalization": "Trim leading/trailing whitespace, then Unicode casefold.",
+  "price_basis": "Column N: applied selling price in AUD, following working-sheet header; delivery/gift-wrapping handling remains to be specified.",
+  "unknown_category_behavior": "Explicit error; no automatic fallback.",
+  "category_mappings": {
+    "apparel": {
+      "amazon_category": "Clothing & Accessories",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "apparel accessories": {
+      "amazon_category": "Clothing & Accessories",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "apparel luggage": {
+      "amazon_category": "Luggage",
+      "source_rule": "13%",
+      "mapping_status": "Official category rate"
+    },
+    "art and craft supplies": {
+      "amazon_category": "Toys & Games",
+      "source_rule": "12% (mapped; verify ASIN category)",
+      "mapping_status": "Mapped / verify ASIN"
+    },
+    "automotive": {
+      "amazon_category": "Automotive and Powersports",
+      "source_rule": "10.5%",
+      "mapping_status": "Official category rate"
+    },
+    "automotive accessory": {
+      "amazon_category": "Automotive and Powersports",
+      "source_rule": "10.5%",
+      "mapping_status": "Official category rate"
+    },
+    "automotive electronics": {
+      "amazon_category": "Consumer Electronics",
+      "source_rule": "8% (mapped; verify ASIN category)",
+      "mapping_status": "Mapped / verify ASIN"
+    },
+    "baby": {
+      "amazon_category": "Baby Products",
+      "source_rule": "8% ≤ AUD 20; 11% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "beauty": {
+      "amazon_category": "Beauty, Health, and Personal Care",
+      "source_rule": "8% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "biss": {
+      "amazon_category": "Business, Industrial and Scientific Supplies",
+      "source_rule": "11%",
+      "mapping_status": "Official category rate"
+    },
+    "books": {
+      "amazon_category": "Media - Books, DVD, Music, Software, Video",
+      "source_rule": "15%",
+      "mapping_status": "Official category rate"
+    },
+    "bottoms": {
+      "amazon_category": "Clothing & Accessories",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "camera": {
+      "amazon_category": "Consumer Electronics",
+      "source_rule": "8% (mapped; verify ASIN category)",
+      "mapping_status": "Mapped / verify ASIN"
+    },
+    "digital_accessories": {
+      "amazon_category": "Electronics Accessories",
+      "source_rule": "13.5%",
+      "mapping_status": "Official category rate"
+    },
+    "electronics": {
+      "amazon_category": "Consumer Electronics",
+      "source_rule": "8%",
+      "mapping_status": "Official category rate"
+    },
+    "furniture": {
+      "amazon_category": "Furniture",
+      "source_rule": "12%",
+      "mapping_status": "Official category rate"
+    },
+    "grocery": {
+      "amazon_category": "Grocery and Gourmet",
+      "source_rule": "8% ≤ AUD 20; 10% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "health & personal care": {
+      "amazon_category": "Beauty, Health, and Personal Care",
+      "source_rule": "8% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "home": {
+      "amazon_category": "Home and Kitchen",
+      "source_rule": "13%",
+      "mapping_status": "Official category rate"
+    },
+    "home appliance": {
+      "amazon_category": "Home and Kitchen Appliances",
+      "source_rule": "8%",
+      "mapping_status": "Official category rate"
+    },
+    "home bedding and bathing": {
+      "amazon_category": "Home and Kitchen",
+      "source_rule": "13% (mapped)",
+      "mapping_status": "Mapped / verify ASIN"
+    },
+    "home decor": {
+      "amazon_category": "Home and Kitchen",
+      "source_rule": "13% (mapped)",
+      "mapping_status": "Mapped / verify ASIN"
+    },
+    "home entertainment": {
+      "amazon_category": "Consumer Electronics",
+      "source_rule": "8% (mapped)",
+      "mapping_status": "Mapped / verify ASIN"
+    },
+    "home furniture": {
+      "amazon_category": "Furniture",
+      "source_rule": "12%",
+      "mapping_status": "Official category rate"
+    },
+    "home improvement": {
+      "amazon_category": "Tools & Home Improvement",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "home tools": {
+      "amazon_category": "Tools & Home Improvement",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "jewellery": {
+      "amazon_category": "Jewellery",
+      "source_rule": "15% up to AUD 200; 5% on portion > AUD 200",
+      "mapping_status": "Official category rate"
+    },
+    "kitchen": {
+      "amazon_category": "Home and Kitchen",
+      "source_rule": "13%",
+      "mapping_status": "Official category rate"
+    },
+    "kitchen utensils": {
+      "amazon_category": "Home and Kitchen",
+      "source_rule": "13%",
+      "mapping_status": "Official category rate"
+    },
+    "lawn and garden": {
+      "amazon_category": "Lawn & Garden",
+      "source_rule": "10.5%",
+      "mapping_status": "Official category rate"
+    },
+    "lingerie": {
+      "amazon_category": "Clothing & Accessories",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "luggage": {
+      "amazon_category": "Luggage",
+      "source_rule": "13%",
+      "mapping_status": "Official category rate"
+    },
+    "luxury beauty": {
+      "amazon_category": "Beauty, Health, and Personal Care",
+      "source_rule": "8% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "major appliances": {
+      "amazon_category": "Major Domestic Appliances",
+      "source_rule": "7%",
+      "mapping_status": "Official category rate"
+    },
+    "media": {
+      "amazon_category": "Media - Books, DVD, Music, Software, Video",
+      "source_rule": "15%",
+      "mapping_status": "Official category rate"
+    },
+    "music": {
+      "amazon_category": "Media - Books, DVD, Music, Software, Video",
+      "source_rule": "15%",
+      "mapping_status": "Official category rate"
+    },
+    "musical instruments": {
+      "amazon_category": "Musical Instruments and AV Production",
+      "source_rule": "11%",
+      "mapping_status": "Official category rate"
+    },
+    "office products": {
+      "amazon_category": "Office Products",
+      "source_rule": "13%",
+      "mapping_status": "Official category rate"
+    },
+    "outdoor": {
+      "amazon_category": "Sports and Outdoors",
+      "source_rule": "13% up to AUD 200; 12% on portion > AUD 200",
+      "mapping_status": "Official category rate"
+    },
+    "pc": {
+      "amazon_category": "Computers",
+      "source_rule": "8% on portion ≤ AUD 150; 6% on portion > AUD 150",
+      "mapping_status": "Official category rate"
+    },
+    "personal care": {
+      "amazon_category": "Beauty, Health, and Personal Care",
+      "source_rule": "8% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "pet products": {
+      "amazon_category": "Pet Products",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "shoes": {
+      "amazon_category": "Shoes, Handbags & Sunglasses",
+      "source_rule": "14% up to AUD 50; 10% on portion > AUD 50",
+      "mapping_status": "Official category rate"
+    },
+    "single piece": {
+      "amazon_category": "Clothing & Accessories",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20 (assumed apparel)",
+      "mapping_status": "Mapped / verify ASIN"
+    },
+    "sports": {
+      "amazon_category": "Sports and Outdoors",
+      "source_rule": "13% up to AUD 200; 12% on portion > AUD 200",
+      "mapping_status": "Official category rate"
+    },
+    "thermal": {
+      "amazon_category": "Sports and Outdoors",
+      "source_rule": "13% up to AUD 200; 12% on portion > AUD 200 (assumed outdoor/thermal)",
+      "mapping_status": "Mapped / verify ASIN"
+    },
+    "tires": {
+      "amazon_category": "Tyres",
+      "source_rule": "9%",
+      "mapping_status": "Official category rate"
+    },
+    "tools": {
+      "amazon_category": "Tools & Home Improvement",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "toys": {
+      "amazon_category": "Toys & Games",
+      "source_rule": "12%",
+      "mapping_status": "Official category rate"
+    },
+    "undergarments": {
+      "amazon_category": "Clothing & Accessories",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "upper body": {
+      "amazon_category": "Clothing & Accessories",
+      "source_rule": "10% ≤ AUD 20; 13% > AUD 20",
+      "mapping_status": "Official category rate"
+    },
+    "video dvd": {
+      "amazon_category": "Media - Books, DVD, Music, Software, Video",
+      "source_rule": "15%",
+      "mapping_status": "Official category rate"
+    },
+    "video games": {
+      "amazon_category": "Video Games and Gaming Accessories",
+      "source_rule": "9%",
+      "mapping_status": "Official category rate"
+    },
+    "watches": {
+      "amazon_category": "Watches",
+      "source_rule": "12% up to AUD 50; 8% on portion > AUD 50",
+      "mapping_status": "Official category rate"
+    },
+    "wireless": {
+      "amazon_category": "Consumer Electronics",
+      "source_rule": "8% (mapped; verify ASIN category)",
+      "mapping_status": "Mapped / verify ASIN"
+    }
+  },
+  "fee_rules": {
+    "Alcoholic Beverages": {
+      "description": "10%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.1
+    },
+    "Automotive and Powersports": {
+      "description": "10.5%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.105
+    },
+    "Baby Products": {
+      "description": "8% ≤ AUD 20; 11% > AUD 20",
+      "currency": "AUD",
+      "type": "whole_price_threshold",
+      "threshold_aud": 20.0,
+      "rate_at_or_below": 0.08,
+      "rate_above": 0.11
+    },
+    "Base Equipment Power Tools": {
+      "description": "7%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.07
+    },
+    "Beauty, Health, and Personal Care": {
+      "description": "8% ≤ AUD 20; 13% > AUD 20",
+      "currency": "AUD",
+      "type": "whole_price_threshold",
+      "threshold_aud": 20.0,
+      "rate_at_or_below": 0.08,
+      "rate_above": 0.13
+    },
+    "Business, Industrial and Scientific Supplies": {
+      "description": "11%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.11
+    },
+    "Clothing & Accessories": {
+      "description": "10% ≤ AUD 20; 13% > AUD 20",
+      "currency": "AUD",
+      "type": "whole_price_threshold",
+      "threshold_aud": 20.0,
+      "rate_at_or_below": 0.1,
+      "rate_above": 0.13
+    },
+    "Computers": {
+      "description": "8% on portion ≤ AUD 150; 6% on portion > AUD 150",
+      "currency": "AUD",
+      "type": "marginal_tiers",
+      "threshold_aud": 150.0,
+      "rate_at_or_below": 0.08,
+      "rate_above": 0.06
+    },
+    "Consumer Electronics": {
+      "description": "8%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.08
+    },
+    "Electronics Accessories": {
+      "description": "13.5%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.135
+    },
+    "Furniture": {
+      "description": "12%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.12
+    },
+    "Grocery and Gourmet": {
+      "description": "8% ≤ AUD 20; 10% > AUD 20",
+      "currency": "AUD",
+      "type": "whole_price_threshold",
+      "threshold_aud": 20.0,
+      "rate_at_or_below": 0.08,
+      "rate_above": 0.1
+    },
+    "Home and Kitchen": {
+      "description": "13%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.13
+    },
+    "Home and Kitchen Appliances": {
+      "description": "8%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.08
+    },
+    "Jewellery": {
+      "description": "15% on portion ≤ AUD 200; 5% on portion > AUD 200",
+      "currency": "AUD",
+      "type": "marginal_tiers",
+      "threshold_aud": 200.0,
+      "rate_at_or_below": 0.15,
+      "rate_above": 0.05
+    },
+    "Lawn & Garden": {
+      "description": "10.5%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.105
+    },
+    "Luggage": {
+      "description": "13%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.13
+    },
+    "Major Domestic Appliances": {
+      "description": "7%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.07
+    },
+    "Media - Books, DVD, Music, Software, Video": {
+      "description": "15%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.15
+    },
+    "Musical Instruments and AV Production": {
+      "description": "11%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.11
+    },
+    "Office Products": {
+      "description": "13%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.13
+    },
+    "Pet Products": {
+      "description": "10% ≤ AUD 20; 13% > AUD 20",
+      "currency": "AUD",
+      "type": "whole_price_threshold",
+      "threshold_aud": 20.0,
+      "rate_at_or_below": 0.1,
+      "rate_above": 0.13
+    },
+    "Shoes, Handbags & Sunglasses": {
+      "description": "14% on portion ≤ AUD 50; 10% on portion > AUD 50",
+      "currency": "AUD",
+      "type": "marginal_tiers",
+      "threshold_aud": 50.0,
+      "rate_at_or_below": 0.14,
+      "rate_above": 0.1
+    },
+    "Sports and Outdoors": {
+      "description": "13% on portion ≤ AUD 200; 12% on portion > AUD 200",
+      "currency": "AUD",
+      "type": "marginal_tiers",
+      "threshold_aud": 200.0,
+      "rate_at_or_below": 0.13,
+      "rate_above": 0.12
+    },
+    "Tools & Home Improvement": {
+      "description": "10% ≤ AUD 20; 13% > AUD 20",
+      "currency": "AUD",
+      "type": "whole_price_threshold",
+      "threshold_aud": 20.0,
+      "rate_at_or_below": 0.1,
+      "rate_above": 0.13
+    },
+    "Toys & Games": {
+      "description": "12%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.12
+    },
+    "Tyres": {
+      "description": "9%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.09
+    },
+    "Video Game Consoles": {
+      "description": "6%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.06
+    },
+    "Video Games and Gaming Accessories": {
+      "description": "9%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.09
+    },
+    "Watches": {
+      "description": "12% on portion ≤ AUD 50; 8% on portion > AUD 50",
+      "currency": "AUD",
+      "type": "marginal_tiers",
+      "threshold_aud": 50.0,
+      "rate_at_or_below": 0.12,
+      "rate_above": 0.08
+    },
+    "Everything else": {
+      "description": "15%",
+      "currency": "AUD",
+      "type": "flat",
+      "rate": 0.15
+    }
+  }
+}
